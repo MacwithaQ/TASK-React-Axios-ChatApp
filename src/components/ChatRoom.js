@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import MessageItem from "./MessageItem";
 
-const ChatRoom = ({ rooms }) => {
+const ChatRoom = ({ rooms, createMessage }) => {
   const roomSlug = useParams().roomSlug;
   const room = rooms.find((room) => room.slug === roomSlug);
   const messagesList = room.messages.map((msg) => {
@@ -12,7 +12,10 @@ const ChatRoom = ({ rooms }) => {
   const handleChange = (event) => {
     setMsg({ ...msg, [event.target.name]: event.target.value });
   };
-  const handleSubmit = (event) => {};
+  const handleSubmit = (event) => {
+    const roomId = room.id;
+    createMessage(roomId, msg);
+  };
 
   return (
     <div className="main__chatcontent">
