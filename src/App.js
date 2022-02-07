@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import ChatRoom from "./components/ChatRoom";
@@ -19,15 +19,19 @@ const App = () => {
       console.log(error);
     }
   };
-  fetchRooms();
+
+  useEffect(() => {
+    fetchRooms();
+  }, []);
 
   const createRoom = async (newRoom) => {
     // to do : call BE to create a room
     try {
-      await axios.post(
+      const response = await axios.post(
         "https://coded-task-axios-be.herokuapp.com/rooms",
         newRoom
       );
+      setRooms([...rooms, response.data]);
     } catch (error) {
       console.log(error);
     }
@@ -62,6 +66,8 @@ const App = () => {
       await axios.delete(
         `https://coded-task-axios-be.herokuapp.com/rooms/${id}`
       );
+      let tempRooms = rooms.filter((room) => room.id !== id);
+      setRooms(tempRooms);
     } catch (error) {
       console.log(error);
     }

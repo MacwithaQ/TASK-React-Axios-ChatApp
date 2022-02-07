@@ -14,7 +14,6 @@ const CreateRoomModal = ({ closeModal, isOpen, createRoom }) => {
       ...room,
       [event.target.name]: event.target.value,
     });
-    console.log(room);
   };
   const handleSubmit = (event) => {
     // to do : stop page from refreshing
